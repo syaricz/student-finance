@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Environment variables (JANGAN di-commit)
+.env
+.env.*
+!.env.example
+
+# Upload bukti transaksi
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS & editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Backup / arsip
+*.zip
+*.bak
