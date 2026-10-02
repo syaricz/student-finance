@@ -30,8 +30,9 @@ app.get('/api/v1/health', (req, res) => {
   res.json({ status: 'ok', app: 'Student Finance API' });
 });
 
-// TODO: daftarkan route di fase berikutnya
-// app.use('/api/v1/auth', require('./routes/auth'));
+// Routes
+app.use('/api/v1/auth', require('./routes/auth'));
+// TODO: route lain didaftarkan di fase berikutnya
 
 // 404
 app.use((req, res) => {
