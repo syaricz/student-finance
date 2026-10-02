@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="id" data-auth="protected">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="assets/img/logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+  <title>Dashboard - Student Finance</title>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/auth.js"></script>
+</head>
+<body>
+  <header class="sf-topbar">
+    <div class="container d-flex align-items-center justify-content-between py-2">
+      <a class="sf-brand" href="dashboard.html">
+        <img src="assets/img/logo.svg" alt="" width="32" height="32">
+        <span>Student Finance</span>
+      </a>
+      <div class="d-flex align-items-center gap-3">
+        <span class="d-none d-sm-inline">Halo, <strong data-user-name></strong></span>
+        <button type="button" class="btn btn-outline-primary" data-logout>Keluar</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-5">
+    <h1 class="h3 fw-semibold mb-1">Halo, <span data-user-name></span></h1>
+    <p class="text-secondary mb-4">Dashboard lengkap dibuat di langkah 1.6. Halaman ini sementara dipakai untuk menguji login.</p>
+
+    <div class="card" style="max-width: 480px;">
+      <div class="card-body p-4">
+        <h2 class="h6 text-secondary mb-3">Data dari GET /auth/me</h2>
+        <div id="meBox" class="text-secondary">Memuat...</div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async function () {
+      var box = document.getElementById('meBox');
+      try {
+        var me = await Api.get('/auth/me');
+        box.textContent = '';
+        [['ID', me.id], ['Nama', me.name], ['Email', me.email], ['Role', me.role]].forEach(function (row) {
+          var p = document.createElement('p');
+          p.className = 'mb-1';
+          var b = document.createElement('strong');
+          b.textContent = row[0] + ': ';
+          p.appendChild(b);
+          p.appendChild(document.createTextNode(row[1]));
+          box.appendChild(p);
+        });
+      } catch (err) {
+        box.textContent = err.message;
+      }
+    });
+  </script>
+</body>
+</html>

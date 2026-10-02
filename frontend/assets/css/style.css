@@ -1,0 +1,190 @@
+/* ============================================================
+   Student Finance - style.css (override Bootstrap 5.3)
+   Token mengikuti Blueprint bagian 6 (Design System)
+   ============================================================ */
+:root {
+  /* Design tokens */
+  --sf-primary: #2563EB;
+  --sf-primary-hover: #1D4ED8;
+  --sf-secondary: #7C3AED;
+  --sf-success: #108981;
+  --sf-warning: #F59E0B;
+  --sf-orange: #F97316;
+  --sf-danger: #EF4444;
+  --sf-bg: #F9FAFB;
+  --sf-surface: #FFFFFF;
+  --sf-text: #111827;
+  --sf-muted: #6B7280;
+  --sf-border: #E5E7EB;
+
+  --sf-radius-sm: 6px;
+  --sf-radius-md: 8px;
+  --sf-radius-lg: 12px;
+  --sf-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --sf-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+  --sf-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+  /* Override variabel Bootstrap */
+  --bs-primary: #2563EB;
+  --bs-primary-rgb: 37, 99, 235;
+  --bs-success: #108981;
+  --bs-success-rgb: 16, 137, 129;
+  --bs-warning: #F59E0B;
+  --bs-warning-rgb: 245, 158, 11;
+  --bs-danger: #EF4444;
+  --bs-danger-rgb: 239, 68, 68;
+  --bs-secondary-rgb: 107, 114, 128;
+  --bs-body-font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  --bs-body-bg: #F9FAFB;
+  --bs-body-color: #111827;
+  --bs-border-color: #E5E7EB;
+  --bs-link-color-rgb: 37, 99, 235;
+  --bs-link-hover-color-rgb: 29, 78, 216;
+  --bs-border-radius: 8px;
+  --bs-border-radius-lg: 12px;
+}
+
+body {
+  font-size: 1rem;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 { letter-spacing: -0.01em; }
+
+/* ---------- Komponen Bootstrap ---------- */
+.btn {
+  --bs-btn-border-radius: var(--sf-radius-md);
+  --bs-btn-font-weight: 600;
+  min-height: 44px;                 /* touch target >= 44px */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-primary {
+  --bs-btn-bg: #2563EB;
+  --bs-btn-border-color: #2563EB;
+  --bs-btn-hover-bg: #1D4ED8;
+  --bs-btn-hover-border-color: #1D4ED8;
+  --bs-btn-active-bg: #1D4ED8;
+  --bs-btn-active-border-color: #1D4ED8;
+  --bs-btn-disabled-bg: #2563EB;
+  --bs-btn-disabled-border-color: #2563EB;
+  --bs-btn-focus-shadow-rgb: 37, 99, 235;
+  --bs-btn-padding-x: 16px;
+  --bs-btn-padding-y: 10px;
+}
+.btn-outline-primary {
+  --bs-btn-color: #2563EB;
+  --bs-btn-border-color: #2563EB;
+  --bs-btn-hover-bg: #2563EB;
+  --bs-btn-hover-border-color: #2563EB;
+  --bs-btn-active-bg: #1D4ED8;
+  --bs-btn-active-border-color: #1D4ED8;
+  --bs-btn-focus-shadow-rgb: 37, 99, 235;
+}
+
+.form-control {
+  min-height: 44px;
+  border-radius: var(--sf-radius-md);
+}
+.form-control:focus {
+  border-color: var(--sf-primary);
+  box-shadow: 0 0 0 0.25rem rgba(37, 99, 235, 0.25);
+}
+.form-label { font-weight: 500; }
+
+.card {
+  --bs-card-border-color: var(--sf-border);
+  --bs-card-border-radius: var(--sf-radius-lg);
+}
+
+:focus-visible { outline: 3px solid rgba(37, 99, 235, 0.55); outline-offset: 2px; }
+.form-control:focus-visible { outline: none; }
+
+/* ---------- Navbar publik ---------- */
+.sf-navbar {
+  background: var(--sf-surface);
+  border-bottom: 1px solid var(--sf-border);
+}
+.sf-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: var(--sf-text);
+  text-decoration: none;
+}
+.sf-brand img { width: 32px; height: 32px; }
+.sf-brand:hover { color: var(--sf-text); }
+
+/* ---------- Landing ---------- */
+.sf-hero { padding: 48px 0 56px; }
+.sf-hero h1 {
+  font-size: clamp(2rem, 5.5vw, 3.25rem);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  max-width: 16ch;
+}
+.sf-hero .lead { max-width: 46ch; color: var(--sf-muted); font-size: 1.125rem; }
+
+.budget-demo { box-shadow: var(--sf-shadow-lg); }
+.budget-demo .progress {
+  height: 8px;
+  background: var(--sf-border);
+  border-radius: 9999px;
+}
+.budget-demo .progress-bar { border-radius: 9999px; }
+.budget-row + .budget-row { margin-top: 16px; }
+.bar-aman    { background: var(--sf-success); }
+.bar-waspada { background: var(--sf-warning); }
+.bar-hampir  { background: var(--sf-orange); }
+.bar-over    { background: var(--sf-danger); }
+.dot {
+  display: inline-block;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: baseline;
+}
+.dot.aman    { background: var(--sf-success); }
+.dot.waspada { background: var(--sf-warning); }
+.dot.hampir  { background: var(--sf-orange); }
+.dot.over    { background: var(--sf-danger); }
+
+.sf-section { padding: 56px 0; }
+.sf-section.alt { background: var(--sf-surface); border-top: 1px solid var(--sf-border); border-bottom: 1px solid var(--sf-border); }
+.sf-section h2 { font-size: clamp(1.5rem, 3.5vw, 1.875rem); font-weight: 600; }
+
+.feature-icon { font-size: 1.75rem; line-height: 1; }
+.step-no {
+  flex: 0 0 auto;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--sf-primary);
+  color: #fff;
+  font-weight: 600;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+
+.sf-footer { padding: 24px 0; color: var(--sf-muted); font-size: 0.875rem; }
+
+/* ---------- Halaman auth ---------- */
+.auth-wrap {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+}
+.auth-card { width: 100%; max-width: 420px; box-shadow: var(--sf-shadow-md); }
+.auth-wrap .sf-brand { margin-bottom: 20px; }
+
+/* ---------- Halaman terproteksi (sementara) ---------- */
+.sf-topbar { background: var(--sf-surface); border-bottom: 1px solid var(--sf-border); }
+
+@media (min-width: 992px) {
+  .sf-hero { padding: 80px 0; }
+}
