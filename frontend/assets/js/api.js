@@ -86,8 +86,10 @@
     const useAuth = opts.auth !== false;
     const token = getToken();
 
-    const headers = { Accept: 'application/json' };
-    if (opts.body !== undefined) headers['Content-Type'] = 'application/json';
+    const isForm = typeof FormData !== 'undefined' && opts.body instanceof FormData;
+    const headers = { Accept: opts.responseType === 'blob' ? '*/*' : 'application/json' };
+    // FormData: biarkan browser mengisi Content-Type (multipart + boundary)
+    if (opts.body !== undefined && !isForm) headers['Content-Type'] = 'application/json';
     if (useAuth && token) headers.Authorization = 'Bearer ' + token;
 
     let res;
@@ -95,11 +97,14 @@
       res = await fetch(API_BASE_URL + path, {
         method: method,
         headers: headers,
-        body: opts.body !== undefined ? JSON.stringify(opts.body) : undefined,
+        body: opts.body === undefined ? undefined : isForm ? opts.body : JSON.stringify(opts.body),
       });
     } catch (e) {
       throw new ApiError('Tidak dapat terhubung ke server. Pastikan backend sudah berjalan.', 0);
     }
+
+    // Unduhan file (mis. bukti transaksi): kembalikan Blob
+    if (res.ok && opts.responseType === 'blob') return res.blob();
 
     let data = null;
     try {
@@ -138,5 +143,7 @@
     post: (path, body, opts) => request(path, Object.assign({ method: 'POST', body: body }, opts)),
     put: (path, body, opts) => request(path, Object.assign({ method: 'PUT', body: body }, opts)),
     del: (path, opts) => request(path, Object.assign({ method: 'DELETE' }, opts)),
+    // GET file dengan token (untuk bukti transaksi; tidak ada folder uploads publik)
+    blob: (path) => request(path, { method: 'GET', responseType: 'blob' }),
   };
 })(window);

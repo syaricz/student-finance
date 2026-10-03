@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const path = require('path');
 const rateLimit = require('express-rate-limit');
 
 const app = express();
@@ -22,8 +21,8 @@ app.use(
   })
 );
 
-// File upload (bukti transaksi)
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// Catatan: folder uploads TIDAK disajikan publik. Bukti transaksi dibuka lewat
+// GET /api/v1/transactions/:id/attachments/:attachmentId (butuh login, hanya pemilik).
 
 // Health check
 app.get('/api/v1/health', (req, res) => {
@@ -33,6 +32,8 @@ app.get('/api/v1/health', (req, res) => {
 // Routes
 app.use('/api/v1/auth', require('./routes/auth'));
 app.use('/api/v1/categories', require('./routes/categories'));
+app.use('/api/v1/payment-methods', require('./routes/paymentMethods'));
+app.use('/api/v1/transactions', require('./routes/transactions'));
 // TODO: route lain didaftarkan di fase berikutnya
 
 // 404

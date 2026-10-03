@@ -241,3 +241,45 @@ h1, h2, h3, h4 { letter-spacing: -0.01em; }
   .category-actions { width: 100%; }
   .category-actions .btn { flex: 1 1 0; }
 }
+
+/* ---------- Transaksi ---------- */
+.form-select {
+  min-height: 44px;
+  border-radius: var(--sf-radius-md);
+}
+.form-select:focus {
+  border-color: var(--sf-primary);
+  box-shadow: 0 0 0 0.25rem rgba(37, 99, 235, 0.25);
+}
+.tx-table { --bs-table-striped-bg: rgba(17, 24, 39, 0.025); }
+.tx-table th { font-size: 0.8125rem; font-weight: 600; color: var(--sf-muted); white-space: nowrap; }
+.tx-table td { vertical-align: middle; }
+.tx-amount { text-align: right; font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.tx-date { white-space: nowrap; }
+.tx-actions { white-space: nowrap; text-align: right; }
+.tx-actions .btn + .btn { margin-left: 6px; }
+.tx-desc { overflow-wrap: anywhere; min-width: 140px; }
+.cat-chip { display: inline-flex; align-items: center; gap: 6px; }
+.cat-dot { width: 10px; height: 10px; border-radius: 50%; flex: 0 0 auto; }
+.btn-link-inline {
+  border: 0;
+  background: none;
+  padding: 0 4px;
+  min-height: 44px;
+  min-width: 44px;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: var(--sf-radius-sm);
+}
+.btn-link-inline:hover { background: var(--sf-bg); }
+.pagination .page-link {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--sf-primary);
+}
+.pagination .page-item.active .page-link { background: var(--sf-primary); border-color: var(--sf-primary); color: #fff; }
+.pagination .page-item.disabled .page-link { color: var(--sf-muted); }
