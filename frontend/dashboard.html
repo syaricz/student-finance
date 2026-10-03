@@ -15,13 +15,17 @@
 </head>
 <body>
   <header class="sf-topbar">
-    <div class="container d-flex align-items-center justify-content-between py-2">
+    <div class="container d-flex flex-wrap align-items-center justify-content-between gap-2 py-2">
       <a class="sf-brand" href="dashboard.html">
         <img src="assets/img/logo.svg" alt="" width="32" height="32">
         <span>Student Finance</span>
       </a>
-      <div class="d-flex align-items-center gap-3">
-        <span class="d-none d-sm-inline">Halo, <strong data-user-name></strong></span>
+      <nav class="sf-topnav order-3 order-md-2" aria-label="Menu utama">
+        <a href="dashboard.html" aria-current="page">Dashboard</a>
+        <a href="categories.html">Kategori</a>
+      </nav>
+      <div class="d-flex align-items-center gap-3 order-2 order-md-3">
+        <span class="d-none d-lg-inline"><strong data-user-name></strong></span>
         <button type="button" class="btn btn-outline-primary" data-logout>Keluar</button>
       </div>
     </div>

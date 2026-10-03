@@ -32,6 +32,7 @@ app.get('/api/v1/health', (req, res) => {
 
 // Routes
 app.use('/api/v1/auth', require('./routes/auth'));
+app.use('/api/v1/categories', require('./routes/categories'));
 // TODO: route lain didaftarkan di fase berikutnya
 
 // 404
