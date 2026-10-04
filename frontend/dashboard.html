@@ -12,57 +12,91 @@
   <title>Dashboard - Student Finance</title>
   <script src="assets/js/api.js"></script>
   <script src="assets/js/auth.js"></script>
+  <script src="assets/js/layout.js" defer></script>
 </head>
-<body>
-  <header class="sf-topbar">
-    <div class="container d-flex flex-wrap align-items-center justify-content-between gap-2 py-2">
-      <a class="sf-brand" href="dashboard.html">
-        <img src="assets/img/logo.svg" alt="" width="32" height="32">
-        <span>Student Finance</span>
-      </a>
-      <nav class="sf-topnav order-3 order-md-2" aria-label="Menu utama">
-        <a href="dashboard.html" aria-current="page">Dashboard</a>
-        <a href="transactions.html">Transaksi</a>
-        <a href="categories.html">Kategori</a>
-      </nav>
-      <div class="d-flex align-items-center gap-3 order-2 order-md-3">
-        <span class="d-none d-lg-inline"><strong data-user-name></strong></span>
-        <button type="button" class="btn btn-outline-primary" data-logout>Keluar</button>
+<body data-page="dashboard">
+  <div id="navbar-placeholder"></div>
+
+  <div class="sf-shell">
+    <div id="sidebar-placeholder"></div>
+
+    <main class="sf-main">
+      <div class="sf-content">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+          <div>
+            <h1 class="h3 fw-semibold mb-1">Halo, <span data-user-name></span>! 👋</h1>
+            <p class="text-secondary mb-0">Ringkasan keuangan Anda bulan ini.</p>
+          </div>
+          <a class="btn btn-primary" href="transactions.html">Catat transaksi</a>
+        </div>
+
+        <!-- Kartu statistik: 1 kolom (mobile) | 2 kolom (tablet) | 4 kolom (desktop). Nilai diisi di langkah 2.1 -->
+        <section class="sf-cards mb-4" aria-label="Ringkasan statistik">
+          <article class="card sf-stat">
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <span class="sf-stat-icon" style="--c: 37, 99, 235" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg>
+              </span>
+              <span class="sf-stat-label">Total pengeluaran bulan ini</span>
+            </div>
+            <div class="sf-stat-value" id="statMonth">–</div>
+          </article>
+
+          <article class="card sf-stat">
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <span class="sf-stat-icon" style="--c: 16, 137, 129" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7a2 2 0 0 0-2-2H5a2 2 0 0 0 0 4h14a2 2 0 0 1 2 2v3"/><path d="M3 5v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4z"/></svg>
+              </span>
+              <span class="sf-stat-label">Sisa anggaran</span>
+            </div>
+            <div class="sf-stat-value" id="statRemaining">–</div>
+          </article>
+
+          <article class="card sf-stat">
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <span class="sf-stat-icon" style="--c: 124, 58, 237" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              </span>
+              <span class="sf-stat-label">Pengeluaran hari ini</span>
+            </div>
+            <div class="sf-stat-value" id="statToday">–</div>
+          </article>
+
+          <article class="card sf-stat">
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <span class="sf-stat-icon" style="--c: 245, 158, 11" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="5" x2="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>
+              </span>
+              <span class="sf-stat-label">Penggunaan anggaran</span>
+            </div>
+            <div class="sf-stat-value" id="statPercent">–</div>
+          </article>
+        </section>
+
+        <!-- Grafik: diisi di langkah 2.2 -->
+        <section class="sf-panels two mb-4" aria-label="Grafik">
+          <article class="card sf-panel">
+            <h2 class="h6 fw-semibold mb-3">Tren pengeluaran harian</h2>
+            <div class="sf-placeholder">Grafik tren pengeluaran akan tampil di sini.</div>
+          </article>
+          <article class="card sf-panel">
+            <h2 class="h6 fw-semibold mb-3">Pengeluaran per kategori</h2>
+            <div class="sf-placeholder">Distribusi pengeluaran per kategori akan tampil di sini.</div>
+          </article>
+        </section>
+
+        <!-- Transaksi terbaru: diisi di langkah 2.1 -->
+        <section class="card sf-panel" aria-label="Transaksi terbaru">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="h6 fw-semibold mb-0">Transaksi terbaru</h2>
+            <a class="small" href="transactions.html">Lihat semua</a>
+          </div>
+          <div class="sf-placeholder">Transaksi terbaru akan tampil di sini.</div>
+        </section>
       </div>
-    </div>
-  </header>
+    </main>
+  </div>
 
-  <main class="container py-5">
-    <h1 class="h3 fw-semibold mb-1">Halo, <span data-user-name></span></h1>
-    <p class="text-secondary mb-4">Dashboard lengkap dibuat di langkah 1.6. Halaman ini sementara dipakai untuk menguji login.</p>
-
-    <div class="card" style="max-width: 480px;">
-      <div class="card-body p-4">
-        <h2 class="h6 text-secondary mb-3">Data dari GET /auth/me</h2>
-        <div id="meBox" class="text-secondary">Memuat...</div>
-      </div>
-    </div>
-  </main>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', async function () {
-      var box = document.getElementById('meBox');
-      try {
-        var me = await Api.get('/auth/me');
-        box.textContent = '';
-        [['ID', me.id], ['Nama', me.name], ['Email', me.email], ['Role', me.role]].forEach(function (row) {
-          var p = document.createElement('p');
-          p.className = 'mb-1';
-          var b = document.createElement('strong');
-          b.textContent = row[0] + ': ';
-          p.appendChild(b);
-          p.appendChild(document.createTextNode(row[1]));
-          box.appendChild(p);
-        });
-      } catch (err) {
-        box.textContent = err.message;
-      }
-    });
-  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

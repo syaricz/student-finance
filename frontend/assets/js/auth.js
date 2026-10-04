@@ -211,6 +211,33 @@
     Api.redirect(Api.pageUrl('index.html'));
   }
 
+  /* ---------- UI user (nama, email, inisial, tombol keluar) ---------- */
+  function initials(name) {
+    const parts = String(name || '').trim().split(/\s+/).filter(Boolean);
+    if (!parts.length) return '?';
+    return (parts[0][0] + (parts.length > 1 ? parts[1][0] : '')).toUpperCase();
+  }
+
+  // Dipanggil untuk seluruh dokumen, dan oleh layout.js untuk navbar yang dimuat lewat fetch()
+  function bindUserUi(scope) {
+    const container = scope || document;
+    const user = Api.getUser();
+
+    container.querySelectorAll('[data-logout]').forEach(function (el) {
+      if (el.dataset.logoutBound) return; // jangan pasang dua kali
+      el.dataset.logoutBound = '1';
+      el.addEventListener('click', function (e) {
+        e.preventDefault();
+        logout();
+      });
+    });
+
+    if (!user) return;
+    container.querySelectorAll('[data-user-name]').forEach(function (el) { el.textContent = user.name; });
+    container.querySelectorAll('[data-user-email]').forEach(function (el) { el.textContent = user.email || ''; });
+    container.querySelectorAll('[data-user-initials]').forEach(function (el) { el.textContent = initials(user.name); });
+  }
+
   /* ---------- Init ---------- */
   document.addEventListener('DOMContentLoaded', function () {
     bindPasswordToggles();
@@ -222,20 +249,8 @@
     if (registerForm) initRegister(registerForm);
     if (forgotForm) initForgot(forgotForm);
 
-    document.querySelectorAll('[data-logout]').forEach(function (el) {
-      el.addEventListener('click', function (e) {
-        e.preventDefault();
-        logout();
-      });
-    });
-
-    const user = Api.getUser();
-    if (user) {
-      document.querySelectorAll('[data-user-name]').forEach(function (el) {
-        el.textContent = user.name;
-      });
-    }
+    bindUserUi(document);
   });
 
-  window.Auth = { logout: logout };
+  window.Auth = { logout: logout, bindUserUi: bindUserUi };
 })();

@@ -12,27 +12,16 @@
   <title>Kategori - Student Finance</title>
   <script src="assets/js/api.js"></script>
   <script src="assets/js/auth.js"></script>
+  <script src="assets/js/layout.js" defer></script>
 </head>
-<body>
-  <header class="sf-topbar">
-    <div class="container d-flex flex-wrap align-items-center justify-content-between gap-2 py-2">
-      <a class="sf-brand" href="dashboard.html">
-        <img src="assets/img/logo.svg" alt="" width="32" height="32">
-        <span>Student Finance</span>
-      </a>
-      <nav class="sf-topnav order-3 order-md-2" aria-label="Menu utama">
-        <a href="dashboard.html">Dashboard</a>
-        <a href="transactions.html">Transaksi</a>
-        <a href="categories.html" aria-current="page">Kategori</a>
-      </nav>
-      <div class="d-flex align-items-center gap-3 order-2 order-md-3">
-        <span class="d-none d-lg-inline"><strong data-user-name></strong></span>
-        <button type="button" class="btn btn-outline-primary" data-logout>Keluar</button>
-      </div>
-    </div>
-  </header>
+<body data-page="categories">
+  <div id="navbar-placeholder"></div>
 
-  <main class="container py-4 py-lg-5" style="max-width: 760px;">
+  <div class="sf-shell">
+    <div id="sidebar-placeholder"></div>
+
+    <main class="sf-main">
+      <div class="sf-content sf-narrow">
     <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
       <div>
         <h1 class="h3 fw-semibold mb-1">Kategori</h1>
@@ -61,7 +50,9 @@
         <ul class="category-list list-unstyled" id="defaultList"></ul>
       </section>
     </div>
-  </main>
+      </div>
+    </main>
+  </div>
 
   <!-- Modal tambah / edit -->
   <div class="modal fade" id="categoryModal" tabindex="-1" aria-labelledby="categoryModalTitle" aria-hidden="true">

@@ -588,6 +588,13 @@
     });
     $('confirmDeleteBtn').addEventListener('click', confirmDelete);
 
+    // Kata kunci dari search global di topbar: transactions.html?search=...
+    const initialSearch = (new URLSearchParams(location.search).get('search') || '').trim();
+    if (initialSearch) {
+      state.filters.search = initialSearch;
+      $('fSearch').value = initialSearch;
+    }
+
     // Jika sesi tidak valid, auth.js sudah mengalihkan ke login; jangan panggil API
     if (!Api.isLoggedIn()) return;
     loadLookups().then(load);

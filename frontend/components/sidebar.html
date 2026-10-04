@@ -1,0 +1,60 @@
+<!-- Sidebar: offcanvas di bawah 992px, tetap (sticky) di atas 992px. Dimuat lewat fetch() oleh layout.js.
+     Menu yang halamannya belum dibuat memakai class "is-disabled"; ganti <span> menjadi <a href="..."> saat halamannya siap. -->
+<aside class="offcanvas-lg offcanvas-start sf-sidebar" tabindex="-1" id="sidebar" aria-labelledby="sidebarTitle">
+  <div class="offcanvas-header">
+    <a class="sf-brand" id="sidebarTitle" href="dashboard.html">
+      <img src="assets/img/logo.svg" alt="" width="32" height="32">
+      <span>Student Finance</span>
+    </a>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebar" aria-label="Tutup menu"></button>
+  </div>
+
+  <div class="offcanvas-body">
+    <nav class="sf-sidebar-inner" aria-label="Menu utama">
+      <ul class="sf-nav list-unstyled mb-0">
+        <li>
+          <a class="sf-nav-link" href="dashboard.html" data-page="dashboard" title="Dashboard">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            <span class="sf-nav-label">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a class="sf-nav-link" href="transactions.html" data-page="transactions" title="Transaksi">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+            <span class="sf-nav-label">Transaksi</span>
+          </a>
+        </li>
+        <li>
+          <a class="sf-nav-link" href="categories.html" data-page="categories" title="Kategori">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+            <span class="sf-nav-label">Kategori</span>
+          </a>
+        </li>
+        <li>
+          <span class="sf-nav-link is-disabled" data-page="budgets" aria-disabled="true" title="Anggaran (segera)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
+            <span class="sf-nav-label">Anggaran</span><span class="sf-soon">Segera</span>
+          </span>
+        </li>
+        <li>
+          <span class="sf-nav-link is-disabled" data-page="reports" aria-disabled="true" title="Laporan (segera)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            <span class="sf-nav-label">Laporan</span><span class="sf-soon">Segera</span>
+          </span>
+        </li>
+        <li>
+          <span class="sf-nav-link is-disabled" data-page="notifications" aria-disabled="true" title="Notifikasi (segera)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            <span class="sf-nav-label">Notifikasi</span><span class="sf-soon">Segera</span>
+          </span>
+        </li>
+        <li>
+          <span class="sf-nav-link is-disabled" data-page="profile" aria-disabled="true" title="Profil (segera)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span class="sf-nav-label">Profil</span><span class="sf-soon">Segera</span>
+          </span>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</aside>
