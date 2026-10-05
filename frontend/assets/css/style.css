@@ -247,7 +247,7 @@ h1, h2, h3, h4 { letter-spacing: -0.01em; }
 .tx-date { white-space: nowrap; }
 .tx-actions { white-space: nowrap; text-align: right; }
 .tx-actions .btn + .btn { margin-left: 6px; }
-.tx-desc { overflow-wrap: anywhere; min-width: 140px; }
+.tx-desc { overflow-wrap: anywhere; min-width: 110px; }
 .cat-chip { display: inline-flex; align-items: center; gap: 6px; }
 .cat-dot { width: 10px; height: 10px; border-radius: 50%; flex: 0 0 auto; }
 .btn-link-inline {
@@ -462,10 +462,14 @@ h1, h2, h3, h4 { letter-spacing: -0.01em; }
 }
 
 /* ---------- Kartu statistik & panel dashboard ---------- */
-/* Mobile: 1 kolom | Tablet (>= 640px): 2 kolom | Desktop (>= 1024px): 4 kolom */
+/* Mobile: 1 kolom | Tablet (>= 640px): 2 kolom | Desktop: 4 kolom.
+   4 kolom ditentukan oleh LEBAR AREA KONTEN (bukan lebar layar), karena sidebar yang terbuka memakan 248px:
+   sidebar terbuka -> 4 kolom mulai layar ~1184px; sidebar diciutkan -> mulai layar ~1008px. */
+.sf-cards-wrap { container-type: inline-size; container-name: sfcards; }
 .sf-cards { display: grid; grid-template-columns: 1fr; gap: 16px; }
 @media (min-width: 640px) { .sf-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (min-width: 1024px) { .sf-cards { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (min-width: 1280px) { .sf-cards { grid-template-columns: repeat(4, minmax(0, 1fr)); } } /* cadangan browser lama */
+@container sfcards (min-width: 880px) { .sf-cards { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 
 .sf-stat { padding: 20px; box-shadow: var(--sf-shadow-sm); }
 .sf-stat-icon {
@@ -478,18 +482,25 @@ h1, h2, h3, h4 { letter-spacing: -0.01em; }
   background: rgba(var(--c), 0.12);
   color: rgb(var(--c));
 }
+.sf-stat > .d-flex:first-child { min-height: 42px; } /* label 1 atau 2 baris: angka di semua kartu tetap sejajar */
 .sf-stat-label { color: var(--sf-muted); font-size: 0.875rem; }
 .sf-stat-value {
-  font-size: clamp(1.25rem, 1.05rem + 0.7vw, 1.75rem);
+  font-size: clamp(1.125rem, 1.05rem + 0.7vw, 1.75rem);
   font-weight: 700;
   line-height: 1.2;
   font-variant-numeric: tabular-nums;
-  overflow-wrap: anywhere;
+  overflow-wrap: anywhere; /* hanya sebagai jaring pengaman untuk nominal yang sangat besar */
+}
+/* Ukuran angka mengikuti lebar kartu (bukan lebar layar), supaya nominal tidak terpotong di kartu sempit */
+.sf-stat { container-type: inline-size; }
+@supports (width: 1cqw) {
+  .sf-stat-value { font-size: clamp(1.125rem, 8.5cqw, 1.75rem); }
 }
 
 .sf-panels { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
 @media (min-width: 1024px) { .sf-panels.two { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .sf-panel { padding: 20px; box-shadow: var(--sf-shadow-sm); }
+@media (max-width: 575.98px) { .sf-panel { padding: 16px; } }
 .sf-placeholder {
   min-height: 160px;
   display: flex;
@@ -502,3 +513,35 @@ h1, h2, h3, h4 { letter-spacing: -0.01em; }
   font-size: 0.875rem;
   text-align: center;
 }
+
+/* ---------- Dashboard: sub-teks kartu, progress, kartu peringatan ---------- */
+.sf-stat-sub { margin-top: 6px; min-height: 1.25rem; color: var(--sf-muted); font-size: 0.8125rem; overflow-wrap: anywhere; }
+.sf-stat-progress { height: 6px; margin-top: 10px; background: var(--sf-border); border-radius: 9999px; }
+.sf-stat-progress .progress-bar { border-radius: 9999px; transition: width 0.4s ease; }
+
+.sf-alerts { display: grid; gap: 8px; margin-bottom: 16px; }
+.sf-alert-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--sf-surface);
+  border: 1px solid var(--sf-border);
+  border-left-width: 4px;
+  border-radius: var(--sf-radius-lg);
+  box-shadow: var(--sf-shadow-sm);
+}
+.sf-alert-title { overflow-wrap: anywhere; }
+.sf-alert-badge {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+@media (max-width: 479.98px) {
+  .sf-alert-card { flex-wrap: wrap; }
+  .sf-alert-badge { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { .sf-stat-progress .progress-bar { transition: none; } }

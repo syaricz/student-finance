@@ -12,6 +12,7 @@
   <title>Dashboard - Student Finance</title>
   <script src="assets/js/api.js"></script>
   <script src="assets/js/auth.js"></script>
+  <script src="assets/js/utils.js"></script>
   <script src="assets/js/layout.js" defer></script>
 </head>
 <body data-page="dashboard">
@@ -30,8 +31,14 @@
           <a class="btn btn-primary" href="transactions.html">Catat transaksi</a>
         </div>
 
-        <!-- Kartu statistik: 1 kolom (mobile) | 2 kolom (tablet) | 4 kolom (desktop). Nilai diisi di langkah 2.1 -->
-        <section class="sf-cards mb-4" aria-label="Ringkasan statistik">
+        <div id="dashAlert" class="alert alert-danger d-none" role="alert"></div>
+
+        <!-- Peringatan anggaran (muncul hanya jika ada kategori/total yang sudah waspada atau lebih) -->
+        <section id="budgetAlerts" class="sf-alerts d-none" aria-label="Peringatan anggaran"></section>
+
+        <!-- Kartu statistik: 1 kolom (mobile) | 2 kolom (tablet) | 4 kolom (desktop) -->
+        <div class="sf-cards-wrap mb-4">
+        <section class="sf-cards" aria-label="Ringkasan statistik">
           <article class="card sf-stat">
             <div class="d-flex align-items-center gap-3 mb-3">
               <span class="sf-stat-icon" style="--c: 37, 99, 235" aria-hidden="true">
@@ -40,6 +47,7 @@
               <span class="sf-stat-label">Total pengeluaran bulan ini</span>
             </div>
             <div class="sf-stat-value" id="statMonth">–</div>
+            <div class="sf-stat-sub" id="statMonthSub"></div>
           </article>
 
           <article class="card sf-stat">
@@ -50,6 +58,7 @@
               <span class="sf-stat-label">Sisa anggaran</span>
             </div>
             <div class="sf-stat-value" id="statRemaining">–</div>
+            <div class="sf-stat-sub" id="statRemainingSub"></div>
           </article>
 
           <article class="card sf-stat">
@@ -60,6 +69,7 @@
               <span class="sf-stat-label">Pengeluaran hari ini</span>
             </div>
             <div class="sf-stat-value" id="statToday">–</div>
+            <div class="sf-stat-sub" id="statTodaySub"></div>
           </article>
 
           <article class="card sf-stat">
@@ -70,8 +80,13 @@
               <span class="sf-stat-label">Penggunaan anggaran</span>
             </div>
             <div class="sf-stat-value" id="statPercent">–</div>
+            <div class="progress sf-stat-progress d-none" id="statPercentBar" role="progressbar" aria-label="Penggunaan anggaran" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+              <div class="progress-bar"></div>
+            </div>
+            <div class="sf-stat-sub" id="statPercentSub"></div>
           </article>
         </section>
+        </div>
 
         <!-- Grafik: diisi di langkah 2.2 -->
         <section class="sf-panels two mb-4" aria-label="Grafik">
@@ -85,18 +100,39 @@
           </article>
         </section>
 
-        <!-- Transaksi terbaru: diisi di langkah 2.1 -->
+        <!-- Transaksi terbaru -->
         <section class="card sf-panel" aria-label="Transaksi terbaru">
           <div class="d-flex justify-content-between align-items-center mb-3">
             <h2 class="h6 fw-semibold mb-0">Transaksi terbaru</h2>
             <a class="small" href="transactions.html">Lihat semua</a>
           </div>
-          <div class="sf-placeholder">Transaksi terbaru akan tampil di sini.</div>
+          <div class="table-responsive" id="recentWrap">
+            <table class="table table-hover align-middle mb-0 tx-table">
+              <thead>
+                <tr>
+                  <th scope="col" class="d-none d-sm-table-cell">Tanggal</th>
+                  <th scope="col">Deskripsi</th>
+                  <th scope="col" class="d-none d-md-table-cell">Kategori</th>
+                  <th scope="col" class="text-end">Nominal</th>
+                </tr>
+              </thead>
+              <tbody id="recentBody">
+                <tr><td colspan="4" class="text-center text-secondary py-4">Memuat transaksi...</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div id="recentEmpty" class="sf-placeholder d-none">
+            <div>
+              <p class="mb-3">Belum ada transaksi. Catat pengeluaran pertama Anda.</p>
+              <a class="btn btn-outline-primary" href="transactions.html">Catat transaksi</a>
+            </div>
+          </div>
         </section>
       </div>
     </main>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/dashboard.js"></script>
 </body>
 </html>

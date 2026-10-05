@@ -34,6 +34,7 @@ app.use('/api/v1/auth', require('./routes/auth'));
 app.use('/api/v1/categories', require('./routes/categories'));
 app.use('/api/v1/payment-methods', require('./routes/paymentMethods'));
 app.use('/api/v1/transactions', require('./routes/transactions'));
+app.use('/api/v1/dashboard', require('./routes/dashboard'));
 // TODO: route lain didaftarkan di fase berikutnya
 
 // 404
