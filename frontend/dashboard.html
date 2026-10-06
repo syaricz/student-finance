@@ -88,16 +88,58 @@
         </section>
         </div>
 
-        <!-- Grafik: diisi di langkah 2.2 -->
-        <section class="sf-panels two mb-4" aria-label="Grafik">
-          <article class="card sf-panel">
-            <h2 class="h6 fw-semibold mb-3">Tren pengeluaran harian</h2>
-            <div class="sf-placeholder">Grafik tren pengeluaran akan tampil di sini.</div>
+        <!-- Grafik (Chart.js): tren harian, distribusi kategori, anggaran vs realisasi -->
+        <section class="sf-panels two mb-4" aria-label="Grafik pengeluaran">
+          <article class="card sf-panel" aria-labelledby="lineTitle">
+            <div class="d-flex flex-wrap justify-content-between align-items-start gap-2 mb-3">
+              <div>
+                <h2 class="h6 fw-semibold mb-1" id="lineTitle">Tren pengeluaran harian</h2>
+                <p class="small text-secondary mb-0" id="lineSummary">Memuat...</p>
+              </div>
+              <div class="btn-group sf-seg" role="group" aria-label="Periode tren pengeluaran">
+                <button type="button" class="btn btn-outline-primary btn-sm active" data-period="7d" aria-pressed="true">7 hari</button>
+                <button type="button" class="btn btn-outline-primary btn-sm" data-period="30d" aria-pressed="false">30 hari</button>
+              </div>
+            </div>
+            <div class="sf-chart" id="lineBox">
+              <canvas id="lineChart" role="img" aria-label="Grafik tren pengeluaran harian"></canvas>
+            </div>
+            <div class="sf-placeholder sf-chart-state" id="lineState" role="status">Memuat grafik...</div>
           </article>
-          <article class="card sf-panel">
-            <h2 class="h6 fw-semibold mb-3">Pengeluaran per kategori</h2>
-            <div class="sf-placeholder">Distribusi pengeluaran per kategori akan tampil di sini.</div>
+
+          <article class="card sf-panel" aria-labelledby="pieTitle">
+            <div class="mb-3">
+              <h2 class="h6 fw-semibold mb-1" id="pieTitle">Pengeluaran per kategori</h2>
+              <p class="small text-secondary mb-0" id="pieSummary">Memuat...</p>
+            </div>
+            <div id="pieBox">
+              <div class="sf-chart sf-chart-round">
+                <canvas id="pieChart" role="img" aria-label="Grafik distribusi pengeluaran per kategori"></canvas>
+              </div>
+              <ul class="sf-legend" id="pieLegend" aria-label="Rincian pengeluaran per kategori"></ul>
+            </div>
+            <div class="sf-placeholder sf-chart-state" id="pieState" role="status">Memuat grafik...</div>
           </article>
+        </section>
+
+        <section class="card sf-panel mb-4" aria-labelledby="barTitle">
+          <div class="mb-3">
+            <h2 class="h6 fw-semibold mb-1" id="barTitle">Anggaran vs realisasi</h2>
+            <p class="small text-secondary mb-0" id="barSummary">Memuat...</p>
+          </div>
+          <div id="barBox">
+            <div class="sf-chart sf-chart-bar" id="barCanvasBox">
+              <canvas id="barChart" role="img" aria-label="Grafik perbandingan anggaran dan realisasi per kategori"></canvas>
+            </div>
+            <ul class="sf-legend sf-legend-inline" aria-label="Keterangan warna">
+              <li><span class="sf-swatch sf-swatch-budget"></span>Anggaran</li>
+              <li><span class="sf-swatch" style="background:#108981"></span>Aman (sampai 70%)</li>
+              <li><span class="sf-swatch" style="background:#F59E0B"></span>Waspada (71–90%)</li>
+              <li><span class="sf-swatch" style="background:#F97316"></span>Hampir habis (91–100%)</li>
+              <li><span class="sf-swatch" style="background:#EF4444"></span>Melebihi (di atas 100%)</li>
+            </ul>
+          </div>
+          <div class="sf-placeholder sf-chart-state" id="barState" role="status">Memuat grafik...</div>
         </section>
 
         <!-- Transaksi terbaru -->
@@ -133,6 +175,8 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.js"></script>
   <script src="assets/js/dashboard.js"></script>
+  <script src="assets/js/charts.js"></script>
 </body>
 </html>

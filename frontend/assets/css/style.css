@@ -545,3 +545,27 @@ h1, h2, h3, h4 { letter-spacing: -0.01em; }
   .sf-alert-badge { width: 100%; }
 }
 @media (prefers-reduced-motion: reduce) { .sf-stat-progress .progress-bar { transition: none; } }
+
+/* ---------- Grafik (Chart.js) ---------- */
+/* Kontainer berposisi relative + tinggi tetap: syarat agar Chart.js responsif (maintainAspectRatio: false) */
+.sf-chart { position: relative; width: 100%; height: 260px; }
+.sf-chart canvas { display: block; max-width: 100%; }
+.sf-chart-round { height: 220px; max-width: 300px; margin: 0 auto; }
+.sf-chart-bar { height: 320px; } /* tinggi sebenarnya diatur charts.js sesuai jumlah kategori */
+.sf-chart-state { min-height: 260px; flex-direction: column; gap: 12px; }
+#pieState { min-height: 300px; }
+#barState { min-height: 200px; }
+@media (min-width: 768px) { .sf-chart:not(.sf-chart-round):not(.sf-chart-bar) { height: 300px; } #lineState { min-height: 300px; } }
+
+.sf-seg .btn { min-width: 76px; }
+
+.sf-legend { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 4px; font-size: 0.875rem; }
+.sf-legend li { display: flex; align-items: center; gap: 10px; min-height: 28px; }
+.sf-legend .sf-legend-name { flex: 1 1 auto; min-width: 0; overflow-wrap: anywhere; }
+.sf-legend .sf-legend-amount { flex: 0 0 auto; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.sf-legend .sf-legend-pct { flex: 0 0 52px; text-align: right; color: var(--sf-muted); font-variant-numeric: tabular-nums; }
+.sf-legend-inline { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 12px; color: var(--sf-muted); font-size: 0.8125rem; }
+.sf-legend-inline li { min-height: 0; gap: 8px; }
+.sf-swatch { flex: 0 0 auto; width: 12px; height: 12px; border-radius: 3px; }
+.sf-swatch-budget { background: #CBD5E1; border: 1px solid #64748B; }
+.sf-legend .sf-swatch { border-radius: 50%; }
