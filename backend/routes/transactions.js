@@ -5,6 +5,7 @@ const transactionController = require('../controllers/transactionController');
 const auth = require('../middlewares/auth');
 const validate = require('../middlewares/validate');
 const { upload } = require('../middlewares/upload');
+const { validateMoney } = require('../utils/validators');
 
 const router = express.Router();
 
@@ -12,7 +13,6 @@ const router = express.Router();
 router.use(auth);
 
 const DATE_OPTS = { format: 'YYYY-MM-DD', strictMode: true, delimiters: ['-'] };
-const MAX_AMOUNT = 9999999999999.99; // batas DECIMAL(15,2)
 
 const idRule = param('id').isInt({ min: 1 }).withMessage('ID transaksi tidak valid');
 const attachmentIdRule = param('attachmentId').isInt({ min: 1 }).withMessage('ID bukti tidak valid');
@@ -38,25 +38,12 @@ const listRules = [
 ];
 
 /* ---------- Validasi body POST / PUT ---------- */
-function validateAmount(value) {
-  if (value === undefined || value === null || String(value).trim() === '') {
-    throw new Error('Nominal wajib diisi');
-  }
-  const s = String(value).trim();
-  const n = Number(s);
-  if (!Number.isFinite(n)) throw new Error('Nominal harus berupa angka');
-  if (n <= 0) throw new Error('Nominal harus lebih dari 0');
-  if (!/^\d+(\.\d{1,2})?$/.test(s)) throw new Error('Nominal maksimal 2 angka desimal');
-  if (n > MAX_AMOUNT) throw new Error('Nominal terlalu besar');
-  return true;
-}
-
 const transactionRules = [
   body('transaction_date')
     .optional({ values: 'falsy' })
     .isDate(DATE_OPTS)
     .withMessage('Tanggal harus berformat YYYY-MM-DD dan valid'),
-  body('amount').custom(validateAmount),
+  body('amount').custom(validateMoney('Nominal')),
   body('category_id').isInt({ min: 1 }).withMessage('Kategori wajib dipilih'),
   body('payment_method_id').isInt({ min: 1 }).withMessage('Metode pembayaran wajib dipilih'),
   body('description')

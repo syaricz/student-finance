@@ -61,7 +61,11 @@
     if (sum.budget_total === null) {
       // Anggaran bulan ini belum diatur
       remaining.textContent = '–';
-      $('statRemainingSub').textContent = 'Anggaran bulan ini belum diatur';
+      const sub = $('statRemainingSub');
+      sub.replaceChildren(document.createTextNode('Anggaran bulan ini belum diatur · '));
+      const link = h('a', '', 'Atur anggaran');
+      link.href = 'budgets.html';
+      sub.appendChild(link);
       percent.textContent = '–';
       $('statPercentSub').textContent = 'Belum ada anggaran';
       bar.classList.add('d-none');

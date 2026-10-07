@@ -57,7 +57,7 @@
   };
 
   /* ---------- Tampilan panel: loading / empty / error / ready ---------- */
-  function show(key, state, message, onRetry) {
+  function show(key, state, message, onRetry, link) {
     const box = $(key + 'Box');
     const st = $(key + 'State');
     if (state === 'ready') {
@@ -68,6 +68,11 @@
     box.classList.add('d-none');
     st.classList.remove('d-none');
     st.replaceChildren(h('p', 'mb-0', message));
+    if (link) {
+      const a = h('a', 'btn btn-outline-primary btn-sm', link.text);
+      a.href = link.href;
+      st.appendChild(a);
+    }
     if (onRetry) {
       const btn = h('button', 'btn btn-outline-primary btn-sm', 'Coba lagi');
       btn.type = 'button';
@@ -312,7 +317,7 @@
     destroy('bar');
     if (!data.has_budget) {
       $('barSummary').textContent = monthLabel;
-      return show('bar', 'empty', 'Anggaran ' + monthLabel.toLowerCase() + ' belum diatur, jadi belum ada yang dibandingkan.');
+      return show('bar', 'empty', 'Anggaran ' + monthLabel.toLowerCase() + ' belum diatur, jadi belum ada yang dibandingkan.', null, { text: 'Atur anggaran', href: 'budgets.html' });
     }
     $('barSummary').textContent = monthLabel + ' · anggaran total ' + money(data.budget_total);
     if (!items.length) {
