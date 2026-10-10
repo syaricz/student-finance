@@ -476,6 +476,8 @@
       modal('txModal').hide();
       showPageAlert('success', editing ? 'Transaksi diperbarui.' : 'Transaksi ditambahkan.');
       if (!editing) state.page = 1; // transaksi baru muncul di halaman pertama
+      // Penyimpanan bisa memicu notifikasi anggaran: segarkan lonceng sekarang, jangan tunggu polling 30 detik
+      if (window.Notifications) window.Notifications.refresh();
       await load();
     } catch (err) {
       if (err.status === 400 && err.errors.length) {

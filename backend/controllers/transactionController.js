@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const pool = require('../config/db');
 const { UPLOAD_DIR, removeFile } = require('../middlewares/upload');
+const { checkBudgetThreshold } = require('../utils/threshold');
 
 // Whitelist kolom sort -> mencegah SQL injection lewat parameter ?sort=
 const SORTS = {
@@ -50,6 +51,16 @@ function today() {
 }
 
 const discard = (req) => req.file && removeFile(req.file.path);
+
+// Periksa threshold anggaran setelah transaksi tersimpan. Kegagalan di sini TIDAK boleh membatalkan
+// transaksi yang sudah berhasil disimpan, jadi error hanya dicatat.
+async function runThreshold(userId, categoryId, date) {
+  try {
+    await checkBudgetThreshold(userId, categoryId, date);
+  } catch (err) {
+    console.error('Pemeriksaan threshold anggaran gagal:', err.message);
+  }
+}
 
 const fieldError = (res, field, message) =>
   res.status(400).json({ message: 'Validasi gagal', errors: [{ field, message }] });
@@ -167,6 +178,7 @@ exports.createTransaction = async (req, res, next) => {
       return fieldError(res, bad.field, bad.message);
     }
 
+    const txDate = b.transaction_date || today();
     conn = await pool.getConnection();
     let id;
     try {
@@ -182,7 +194,7 @@ exports.createTransaction = async (req, res, next) => {
           String(b.amount).trim(),
           b.description,
           b.notes || null,
-          b.transaction_date || today(),
+          txDate,
         ]
       );
       id = r.insertId;
@@ -199,6 +211,7 @@ exports.createTransaction = async (req, res, next) => {
       throw e;
     }
 
+    await runThreshold(userId, Number(b.category_id), txDate);
     return res.status(201).json(await fetchOne(userId, id));
   } catch (err) {
     next(err);
@@ -271,6 +284,7 @@ exports.updateTransaction = async (req, res, next) => {
     // File lama baru dihapus setelah database berhasil di-commit
     oldFiles.forEach((f) => removeFile(path.join(UPLOAD_DIR, path.basename(f))));
 
+    await runThreshold(userId, Number(b.category_id), b.transaction_date || existing.transaction_date);
     return res.status(200).json(await fetchOne(userId, id));
   } catch (err) {
     next(err);

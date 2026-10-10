@@ -89,6 +89,17 @@
     if (btn) btn.setAttribute('aria-label', n > 0 ? 'Notifikasi, ' + n + ' belum dibaca' : 'Notifikasi');
   }
 
+  // Skrip notifikasi (lonceng, toast, polling) dimuat setelah navbar ada, di semua halaman terproteksi
+  function loadScript(src) {
+    return new Promise(function (resolve, reject) {
+      const el = document.createElement('script');
+      el.src = src;
+      el.onload = resolve;
+      el.onerror = function () { reject(new Error('Gagal memuat ' + src)); };
+      document.body.appendChild(el);
+    });
+  }
+
   async function init() {
     try {
       const [navbar, sidebar] = await Promise.all([
@@ -99,6 +110,7 @@
       if (window.Auth && Auth.bindUserUi) Auth.bindUserUi(navbar || document);
       bindCollapse();
       document.dispatchEvent(new CustomEvent('layout:ready'));
+      loadScript(Api.pageUrl('assets/js/notifications.js')).catch(function (e) { console.warn(e.message); });
     } catch (err) {
       showLoadError(
         'Menu navigasi gagal dimuat. Buka halaman ini lewat server (mis. Live Server), bukan langsung dari file. ' + err.message
