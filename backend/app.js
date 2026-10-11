@@ -40,6 +40,7 @@ app.use('/api/v1/transactions', require('./routes/transactions'));
 app.use('/api/v1/budgets', require('./routes/budgets'));
 app.use('/api/v1/dashboard', require('./routes/dashboard'));
 app.use('/api/v1/notifications', require('./routes/notifications'));
+app.use('/api/v1/reports', require('./routes/reports'));
 // TODO: route lain didaftarkan di fase berikutnya
 
 // 404
