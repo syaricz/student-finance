@@ -52,5 +52,6 @@ router.get(
 );
 
 router.get('/category', rangeRules, validate, reportController.getCategoryReport);
+router.get('/transactions', rangeRules, validate, reportController.getTransactionsDetail);
 
 module.exports = router;
